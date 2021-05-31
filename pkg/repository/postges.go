@@ -1,4 +1,3 @@
-
 package repository
 
 import (
@@ -16,8 +15,15 @@ type Config struct {
 }
 
 func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
-	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-		cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLMode))
+	var conn string
+	if cfg.Username == "" {
+		conn = fmt.Sprintf("host=%s port=%s dbname=%s sslmode=%s",
+			cfg.Host, cfg.Port, cfg.DBName, cfg.SSLMode)
+	} else {
+		conn = fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
+			cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLMode)
+	}
+	db, err := sqlx.Open("postgres", conn)
 	if err != nil {
 		return nil, err
 	}
@@ -29,4 +35,3 @@ func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
 
 	return db, nil
 }
-

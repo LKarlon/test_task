@@ -29,7 +29,7 @@ func (s *storage) GetInfo(serverID int) (res models.Servers, err error) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		err = rows.Scan(&tmp.Name, &tmp.ServerName, &tmp.Values)
+		err = rows.Scan(&tmp.ServerName, &tmp.Values, &tmp.Name)
 		if err != nil {
 			return
 		}
@@ -39,6 +39,10 @@ func (s *storage) GetInfo(serverID int) (res models.Servers, err error) {
 }
 
 func (s *storage) DeleteInfo(serverID int) (err error) {
-	_, err = s.db.Exec(qDeleteInfo, serverID)
+	_, err = s.db.Exec(qDeleteInfoFromBandwidths, serverID)
+	if err != nil {
+		return
+	}
+	_, err = s.db.Exec(qDeleteInfoFromServers, serverID)
 	return
 }

@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="997175ab-cc64-4f3c-abfb-85853e6c5320" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignor" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/repository/postges.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/repository/postges.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/repository/query.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/repository/query.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/repository/storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/repository/storage.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema/000001_init.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/schema/000001_init.up.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,9 +90,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/pkg/repository/postges.go</url>
-          <line>17</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/pkg/repository/storage.go</url>
+          <line>22</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/pkg/repository/storage.go</url>
+          <line>40</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
