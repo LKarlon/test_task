@@ -1,40 +1,67 @@
 package handler
 
 import (
-	"io/ioutil"
-
-	"github.com/LKarlon/test_task/pkg/service"
+	"github.com/LKarlon/test_task/pkg/models"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
-type Handler struct {
-	services *service.Service
+type service interface {
+	GetInfo(serverID int) (res models.Servers, err error)
+	DeleteInfo(serverID int) (er error)
 }
 
-func NewHandler(services *service.Service) *Handler {
-	return &Handler{services: services}
+type transport interface {
+	ServerIdDecode(ctx *gin.Context) (id int, err error)
+	//GetInfoEncode(ctx *gin.Context, res models.Servers) (err error)
+}
+
+type Handler struct {
+	service   service
+	transport transport
+}
+
+func NewHandler(services service, transport transport) *Handler {
+	return &Handler{service: services, transport: transport}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
-	router.GET("/metrics", h.convert)
+	router.GET("/:id", h.GetInfo)
+	router.DELETE("/:id", h.DeleteInfo)
 
 	return router
 }
 
-func (h *Handler) convert(c *gin.Context){	 
-	file, err := ioutil.ReadFile("./file.yaml")
+func (h *Handler) GetInfo(ctx *gin.Context) {
+	id, err := h.transport.ServerIdDecode(ctx)
 	if err != nil {
-		logrus.Errorf("file read error: %s", err.Error())
+		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	str, err := h.services.Convert(file)
+	info, err := h.service.GetInfo(id)
 	if err != nil {
-		logrus.Errorf("service error: %s", err.Error())
+		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.String(200, str)
+
+	ctx.JSON(http.StatusOK, info)
+}
+
+func (h *Handler) DeleteInfo(ctx *gin.Context) {
+	id, err := h.transport.ServerIdDecode(ctx)
+	if err != nil {
+		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	err = h.service.DeleteInfo(id)
+	if err != nil {
+		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	ctx.Status(http.StatusOK)
 }

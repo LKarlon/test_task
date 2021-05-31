@@ -1,32 +1,31 @@
 package service
 
 import (
-	"fmt"
-
 	"github.com/LKarlon/test_task/pkg/models"
-	"github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v2"
 )
 
-type Conversion interface {
-	Convert(file string) (fileOut string, err error)
+type storage interface {
+	GetInfo(serverID int) (models.Servers, error)
+	DeleteInfo(serverID int) error
 }
 
-type Service struct {
-	Conversion
+type Service interface {
+	GetInfo(serverID int) (res models.Servers, err error)
+	DeleteInfo(serverID int) (err error)
 }
 
-func NewService() *Service {
-	return &Service{}
+type service struct {
+	storage
 }
 
-func (s *Service) Convert(file []byte) (fileOut string, err error){
-	t := models.Yaml2Go{}
-	err = yaml.Unmarshal(file, &t)
-    	if err != nil {
-			logrus.Errorf("YAML unmarshall error: %s", err.Error())
-			return
-       	}
-	fileOut = fmt.Sprintf("currency{%s=%d, %s=%d}", t.Currencies[0].Name, t.Currencies[0].Value, t.Currencies[1].Name, t.Currencies[1].Value)
-	return
+func NewService(storage storage) Service {
+	return &service{storage: storage}
+}
+
+func (s *service) GetInfo(serverID int) (res models.Servers, err error) {
+	return s.storage.GetInfo(serverID)
+}
+
+func (s *service) DeleteInfo(serverID int) (err error) {
+	return s.storage.DeleteInfo(serverID)
 }

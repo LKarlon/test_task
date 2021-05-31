@@ -1,10 +1,16 @@
 package models
-type Yaml2Go struct {
-	Currencies []Currencies `yaml:"currencies"`
+
+/*type GetInfoResponse struct {
+	Interfaces []Interface `json:"Servers"`
+}*/
+
+type Servers struct {
+	//	Name       string      `json:"servername"`
+	Interfaces []Interface `json:"Interfaces"`
 }
 
-// Currencies
-type Currencies struct {
-	Name  string `yaml:"name"`
-	Value int    `yaml:"value"`
+type Interface struct {
+	ServerName string  `json:"servername"`
+	Name       string  `json:"id"`
+	Values     float64 `json:"values"`
 }
