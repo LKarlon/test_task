@@ -1,11 +1,6 @@
 package models
 
-/*type GetInfoResponse struct {
-	Interfaces []Interface `json:"Servers"`
-}*/
-
 type Servers struct {
-	//	Name       string      `json:"servername"`
 	Interfaces []Interface `json:"Interfaces"`
 }
 

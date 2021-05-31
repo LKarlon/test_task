@@ -13,14 +13,13 @@ type transport struct {
 }
 
 func (t *transport) ServerIdDecode(ctx *gin.Context) (id int, err error) {
- 	res := ctx.Param("id")
+	res := ctx.Param("id")
 	if res == "" {
 		return
 	}
 	id, err = strconv.Atoi(res)
 	return
 }
-
 
 func NewTransport() Transport {
 	return &transport{}

@@ -10,10 +10,10 @@ import (
 	"github.com/LKarlon/test_task/pkg/handler"
 	"github.com/LKarlon/test_task/pkg/server"
 	"github.com/LKarlon/test_task/pkg/service"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 func main() {
